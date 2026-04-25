@@ -29,13 +29,9 @@ app.use("/api/questions", require("./routes/questionRoutes.js"));
 app.use("/api/code", require("./routes/CodeRoutes.js"));
 
 const PORT = process.env.PORT || 3001;
-const HOST = process.env.HOST || "127.0.0.1";
 
-const server = app.listen(PORT, HOST, () => {
-    const addr = server.address();
-    const address = addr && typeof addr === 'object' ? addr.address : HOST;
-    const port = addr && typeof addr === 'object' ? addr.port : PORT;
-    console.log(`Server running on ${address}:${port}`)
+const server = app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`)
     connectDb()
 });
 
