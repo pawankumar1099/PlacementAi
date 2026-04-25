@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const connectDb = require('./config/db.js')
 const cookieParser = require("cookie-parser");
-
+require('dotenv').config() 
 const app = express();
 
 
