@@ -1,8 +1,11 @@
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET || "secret123";
+const JWT_SECRET = process.env.JWT_SECRET;
 
 module.exports = (req, res, next) => {
+  if (!JWT_SECRET) {
+    return res.status(500).json({ message: "Server configuration error: JWT_SECRET not set" });
+  }
   try {
     const token = req.cookies.token;
 
