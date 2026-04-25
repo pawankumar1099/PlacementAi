@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 app.use(cors({
-  origin: true,
+  origin: ["http://localhost:5173", "https://placementai.netlify.app", "https://placement-ai.netlify.app"],
   credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
