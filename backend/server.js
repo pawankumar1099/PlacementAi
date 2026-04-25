@@ -15,18 +15,25 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://placementai.netlify.app", "https://placement-ai.netlify.app"],
+  origin: ["http://localhost:5173", "https://placementai-2.onrender.com"],
   credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+// Added static file serving for Render deployment
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.use("/api/auth", require("./routes/authRoutes.js"));
 app.use("/api/resume", require("./routes/resumeRoutes.js"));
 app.use("/api/questions", require("./routes/questionRoutes.js"));
 app.use("/api/code", require("./routes/CodeRoutes.js"));
+
+// Handle SPA routing - deliver index.html for all non-api routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});
 
 const PORT = process.env.PORT || 3001;
 
