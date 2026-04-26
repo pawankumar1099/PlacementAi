@@ -20,7 +20,9 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://placementai-backend.onrender.com",
-  "https://placementai-frontend.onrender.com"
+  "https://placementai-frontend.onrender.com",
+  "https://placementai.onrender.com",
+  "https://placementai-1.onrender.com"
 ];
 
 app.use(cors({
