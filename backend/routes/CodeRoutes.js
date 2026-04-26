@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware.js");
 const CodingQuestion = require("../models/CodingQuestion.js");
 
 // List coding questions for a company (without revealing expectedOutput)
-router.get("/list/:company", authMiddleware, async (req, res) => {
+router.get("/list/:company",  async (req, res) => {
   try {
     const company = req.params.company;
     const questions = await CodingQuestion.find({ company }).select("title description input company");
@@ -16,7 +16,7 @@ router.get("/list/:company", authMiddleware, async (req, res) => {
 });
 
 // Get a single coding question (without revealing expectedOutput)
-router.get("/question/:id", authMiddleware, async (req, res) => {
+router.get("/question/:id",  async (req, res) => {
   try {
     const q = await CodingQuestion.findById(req.params.id).select("title description input company");
     if (!q) return res.status(404).json({ message: "Question not found" });
@@ -26,7 +26,7 @@ router.get("/question/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/run", authMiddleware, async (req, res) => {
+router.post("/run",  async (req, res) => {
   try {
     const { code, questionId } = req.body;
 

@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-router.post("/upload",authMiddleware, upload.single("resume"), async (req, res) => {
+router.post("/upload", upload.single("resume"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded. Please upload a file with field name 'resume'" });
@@ -153,7 +153,7 @@ router.get("/my",authMiddleware, async (req, res) => {
 
 
 
-router.get("/all",authMiddleware, async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const resumes = await Resume.find().sort({ createdAt: -1 });
     res.json(resumes);

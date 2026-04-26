@@ -4,7 +4,7 @@ const Question = require("../models/Question.js");
 const router = express.Router();
 
 // List companies with available questions
-router.get("/companies/list", authMiddleware, async (req, res) => {
+router.get("/companies/list",  async (req, res) => {
   try {
     const companies = await Question.distinct("company");
     res.json(companies);
@@ -14,7 +14,7 @@ router.get("/companies/list", authMiddleware, async (req, res) => {
 });
 
 // Get 5 random MCQ questions for a company
-router.get("/:company", authMiddleware, async (req, res) => {
+router.get("/:company",  async (req, res) => {
   try {
     const company = req.params.company;
 
