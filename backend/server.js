@@ -5,6 +5,7 @@ const path = require("path");
 const fs = require("fs");
 const connectDb = require('./config/db.js')
 const cookieParser = require("cookie-parser");
+require('dotenv').config()
 
 const app = express();
 
@@ -14,26 +15,30 @@ if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
 
+const allowedOrigins = [
+  "http://localhost:5000",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://placementai-backend.onrender.com",
+  "https://placementai-frontend.onrender.com"
+];
+
 app.use(cors({
-  origin: ["http://localhost:5173", "https://placementai-2.onrender.com"],
+  origin: allowedOrigins,
   credentials: true
 }));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-
-// Added static file serving for Render deployment
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.use("/api/auth", require("./routes/authRoutes.js"));
 app.use("/api/resume", require("./routes/resumeRoutes.js"));
 app.use("/api/questions", require("./routes/questionRoutes.js"));
 app.use("/api/code", require("./routes/CodeRoutes.js"));
 
-// Handle SPA routing - deliver index.html for all non-api routes
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-});
+// For independent deployment - backend only serves API
+// Frontend is deployed separately on Render
 
 const PORT = process.env.PORT || 3001;
 

@@ -1,6 +1,8 @@
 // Lightweight API client. All requests are credentialed (cookie-based JWT).
 
+
 const BASE = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+
 
 async function request(path, options = {}) {
   const opts = {

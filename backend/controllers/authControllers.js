@@ -2,7 +2,10 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const JWT_SECRET = process.env.JWT_SECRET || "secret123";
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  console.warn("WARNING: JWT_SECRET not set in environment. Authentication may fail.");
+}
 
 exports.signup = async (req, res) => {
   try {
@@ -31,8 +34,10 @@ exports.signup = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
+
       sameSite: "none",
       secure: true,
+
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -78,8 +83,10 @@ exports.login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
+
       sameSite: "none",
       secure: true,
+
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
